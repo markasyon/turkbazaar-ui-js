@@ -26,46 +26,59 @@ export default function AnaSayfa() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
       {/* ÜST ŞERİT */}
-      <header className="bg-green-700 text-white px-6 py-4 flex flex-col md:flex-row justify-between items-center shadow gap-3">
-        {/* Logo ve Başlık */}
+      <header className="bg-green-700 text-white px-6 py-4 flex justify-between items-center shadow relative">
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="TurkBazaar Logosu" width={40} height={40} />
           <span className="text-xl font-bold">TurkBazaar</span>
         </div>
 
-        {/* Kategoriler Butonu */}
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="bg-white text-green-700 px-3 py-1 rounded font-semibold">Kategoriler:</span>
-          {kategoriler.slice(0, 4).map((kategori, i) => (
-            <span key={i} className="bg-green-800 text-white text-sm px-2 py-1 rounded">
-              {kategori}
-            </span>
-          ))}
-        </div>
+        <div className="flex items-center gap-4">
+          <Link href="/giris-yap" className="hover:underline">
+            Giriş Yap
+          </Link>
+          <Link href="/kayit-ol" className="hover:underline">
+            Kayıt Ol
+          </Link>
 
-        {/* Sağ Taraf: Giriş / Dil / Destek */}
-        <div className="flex items-center gap-3">
-          <Link href="/giris-yap" className="hover:underline">Giriş Yap</Link>
-          <Link href="/kayit-ol" className="hover:underline">Kayıt Ol</Link>
+          {/* Kategoriler Açılır Menü */}
+          <div className="relative group">
+            <button className="hover:underline">Kategoriler</button>
+            <div className="absolute hidden group-hover:block bg-white text-black shadow-md rounded mt-2 p-2 w-48 z-50">
+              {kategoriler.map((kat, i) => (
+                <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm">
+                  {kat}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dil Seçimi */}
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value)}
             className="bg-white text-green-700 px-2 py-1 rounded"
           >
-            <option value="TR">Türkçe</option>
-            <option value="EN">English</option>
-            <option value="AR">عربي</option>
-            <option value="DE">Deutsch</option>
-            <option value="ZH">中文</option>
-            <option value="KR">한국어</option>
+            <option value="TR">🇹🇷 Türkçe</option>
+            <option value="EN">🇬🇧 English</option>
+            <option value="AR">🇸🇦 عربي</option>
+            <option value="DE">🇩🇪 Deutsch</option>
+            <option value="ZH">🇨🇳 中文</option>
+            <option value="KO">🇰🇷 한국어</option>
           </select>
-          <button className="bg-white text-green-700 px-3 py-1 rounded hover:bg-gray-100">
+
+          {/* Canlı Destek (WhatsApp Bağlantısı) */}
+          <a
+            href="https://wa.me/905462359747"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-green-700 px-3 py-1 rounded hover:bg-gray-100"
+          >
             Canlı Destek
-          </button>
+          </a>
         </div>
       </header>
 
-      {/* ARAMA ve KATEGORİLER */}
+      {/* ANA İÇERİK */}
       <main className="p-8">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-2">TurkBazaar&apos;a Hoş Geldiniz</h1>
@@ -74,7 +87,7 @@ export default function AnaSayfa() {
           </p>
         </div>
 
-        {/* ARAMA BUTONU */}
+        {/* ARAMA */}
         <div className="flex justify-center mb-8">
           <input
             type="text"
@@ -86,7 +99,7 @@ export default function AnaSayfa() {
           </button>
         </div>
 
-        {/* TÜM KATEGORİLER */}
+        {/* KATEGORİLER */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6">
           {kategoriler.map((kategori, index) => (
             <div
@@ -110,7 +123,7 @@ export default function AnaSayfa() {
         </div>
       </main>
 
-      {/* ALT BÖLÜM / FOOTER */}
+      {/* FOOTER */}
       <footer className="bg-green-800 text-white py-10">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
@@ -130,7 +143,7 @@ export default function AnaSayfa() {
           </div>
           <div>
             <h2 className="text-lg font-bold mb-2">İletişim</h2>
-            <p className="text-sm text-gray-200">+90 555 555 55 55</p>
+            <p className="text-sm text-gray-200">+90 537 056 25 03 </p>
             <p className="text-sm text-gray-200">info@turkbazaar.com.tr</p>
             <p className="text-sm text-gray-200">Türkiye Merkez Ofis</p>
           </div>
