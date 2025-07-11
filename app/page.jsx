@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image'; import Link from 'next/link'; import { useState } from 'react'; import UrunKarti from '@/components/UrunKarti'; import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintBrush, FaPuzzlePiece, FaTshirt, FaMobileAlt, FaLeaf, FaSeedling, FaCouch, FaUtensils, FaHammer } from 'react-icons/fa6';
+import Image from 'next/image'; import Link from 'next/link'; import { useState } from 'react'; import UrunKarti from '@/components/UrunKarti'; import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintBrush, FaPuzzlePiece, FaTshirt, FaMobileAlt, FaLeaf, FaSeedling, FaCouch, FaUtensils, FaHammer } from 'react-icons/fa';
 
 export default function AnaSayfa() { const [lang, setLang] = useState('TR');
 
@@ -45,7 +45,7 @@ return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
 
       {/* Canlı Destek (WhatsApp Bağlantısı) */}
       <a
-        href="https://wa.me/905462359747"
+        href="https://wa.me/905551112233"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-white text-green-700 px-3 py-1 rounded hover:bg-gray-100"
@@ -120,7 +120,7 @@ return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
       </div>
       <div>
         <h2 className="text-lg font-bold mb-2">İletişim</h2>
-        <p className="text-sm text-gray-200">+90 537 056 25 03</p>
+        <p className="text-sm text-gray-200">+90 555 555 55 55</p>
         <p className="text-sm text-gray-200">info@turkbazaar.com.tr</p>
         <p className="text-sm text-gray-200">Türkiye Merkez Ofis</p>
       </div>
