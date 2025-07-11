@@ -4,69 +4,50 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import UrunKarti from '@/components/UrunKarti';
+import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintBrush, FaGamepad, FaTshirt, FaMobileAlt, FaMugHot, FaSeedling, FaCouch, FaHome, FaTools } from 'react-icons/fa';
 
 export default function AnaSayfa() {
   const [lang, setLang] = useState('TR');
 
   const kategoriler = [
-    'Ambalaj ve Baskı',
-    'Taşımacılık',
-    'Isıklar ve Aydınlatma',
-    'Sanat ve El Sanatları',
-    'Oyuncaklar',
-    'Giyim ve Aksesuar',
-    'Tüketici Elektroniği',
-    'Günlük Kullanım Ürünleri',
-    'Gıda ve Tarım',
-    'Mobilya',
-    'Ev Gereçleri',
-    'Yapı ve İnşaat'
+    { ad: 'Ambalaj ve Baskı', ikon: <FaBoxOpen size={24} className="text-green-600" /> },
+    { ad: 'Taşımacılık', ikon: <FaTruck size={24} className="text-green-600" /> },
+    { ad: 'Isıklar ve Aydınlatma', ikon: <FaLightbulb size={24} className="text-green-600" /> },
+    { ad: 'Sanat ve El Sanatları', ikon: <FaPaintBrush size={24} className="text-green-600" /> },
+    { ad: 'Oyuncaklar', ikon: <FaGamepad size={24} className="text-green-600" /> },
+    { ad: 'Giyim ve Aksesuar', ikon: <FaTshirt size={24} className="text-green-600" /> },
+    { ad: 'Tüketici Elektroniği', ikon: <FaMobileAlt size={24} className="text-green-600" /> },
+    { ad: 'Günlük Kullanım Ürünleri', ikon: <FaMugHot size={24} className="text-green-600" /> },
+    { ad: 'Gıda ve Tarım', ikon: <FaSeedling size={24} className="text-green-600" /> },
+    { ad: 'Mobilya', ikon: <FaCouch size={24} className="text-green-600" /> },
+    { ad: 'Ev Gereçleri', ikon: <FaHome size={24} className="text-green-600" /> },
+    { ad: 'Yapı ve İnşaat', ikon: <FaTools size={24} className="text-green-600" /> }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
       {/* ÜST ŞERİT */}
-      <header className="bg-green-700 text-white px-6 py-4 flex justify-between items-center shadow relative">
+      <header className="bg-green-700 text-white px-6 py-4 flex justify-between items-center shadow">
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="TurkBazaar Logosu" width={40} height={40} />
           <span className="text-xl font-bold">TurkBazaar</span>
         </div>
-
         <div className="flex items-center gap-4">
-          <Link href="/giris-yap" className="hover:underline">
-            Giriş Yap
-          </Link>
-          <Link href="/kayit-ol" className="hover:underline">
-            Kayıt Ol
-          </Link>
-
-          {/* Kategoriler Açılır Menü */}
-          <div className="relative group">
-            <button className="hover:underline">Kategoriler</button>
-            <div className="absolute hidden group-hover:block bg-white text-black shadow-md rounded mt-2 p-2 w-48 z-50">
-              {kategoriler.map((kat, i) => (
-                <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm">
-                  {kat}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dil Seçimi */}
+          <Link href="/giris-yap" className="hover:underline">Giriş Yap</Link>
+          <Link href="/kayit-ol" className="hover:underline">Kayıt Ol</Link>
+          <Link href="#" className="hover:underline">Kategoriler</Link>
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value)}
             className="bg-white text-green-700 px-2 py-1 rounded"
           >
-            <option value="TR">🇹🇷 Türkçe</option>
-            <option value="EN">🇬🇧 English</option>
-            <option value="AR">🇸🇦 عربي</option>
-            <option value="DE">🇩🇪 Deutsch</option>
-            <option value="ZH">🇨🇳 中文</option>
-            <option value="KO">🇰🇷 한국어</option>
+            <option value="TR">Türkçe</option>
+            <option value="EN">English</option>
+            <option value="AR">عربي</option>
+            <option value="DE">Deutsch</option>
+            <option value="ZH">中文</option>
+            <option value="KO">한국어</option>
           </select>
-
-          {/* Canlı Destek (WhatsApp Bağlantısı) */}
           <a
             href="https://wa.me/905462359747"
             target="_blank"
@@ -78,7 +59,7 @@ export default function AnaSayfa() {
         </div>
       </header>
 
-      {/* ANA İÇERİK */}
+      {/* ARAMA ve KATEGORİLER */}
       <main className="p-8">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-2">TurkBazaar&apos;a Hoş Geldiniz</h1>
@@ -87,7 +68,7 @@ export default function AnaSayfa() {
           </p>
         </div>
 
-        {/* ARAMA */}
+        {/* ARAMA BUTONU */}
         <div className="flex justify-center mb-8">
           <input
             type="text"
@@ -101,13 +82,13 @@ export default function AnaSayfa() {
 
         {/* KATEGORİLER */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6">
-          {kategoriler.map((kategori, index) => (
+          {kategoriler.map((kat, index) => (
             <div
               key={index}
-              className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer"
+              className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer text-center"
             >
-              <div className="text-green-600 text-2xl mb-2">📦</div>
-              <p className="font-medium">{kategori}</p>
+              <div className="flex justify-center mb-2">{kat.ikon}</div>
+              <p className="font-medium">{kat.ad}</p>
             </div>
           ))}
         </div>
@@ -143,7 +124,7 @@ export default function AnaSayfa() {
           </div>
           <div>
             <h2 className="text-lg font-bold mb-2">İletişim</h2>
-            <p className="text-sm text-gray-200">+90 537 056 25 03 </p>
+            <p className="text-sm text-gray-200">+90 537 056 25 03</p>
             <p className="text-sm text-gray-200">info@turkbazaar.com.tr</p>
             <p className="text-sm text-gray-200">Türkiye Merkez Ofis</p>
           </div>
