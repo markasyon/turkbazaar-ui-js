@@ -11,10 +11,12 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
 });
 
-// ✅ Tarayıcı sekmesinde görünen başlık buradan ayarlanır
 export const metadata = {
   title: 'TurkBazaar - Türkiye’nin B2B Pazaryeri',
   description: 'Yerli üreticileri dünya ile buluşturan ticaret platformu.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }) {
