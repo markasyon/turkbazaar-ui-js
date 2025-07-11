@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import UrunKarti from '@/components/UrunKarti';
-import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintBrush, FaGamepad, FaTshirt, FaMobileAlt, FaMugHot, FaSeedling, FaCouch, FaHome, FaTools } from 'react-icons/fa';
+import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintBrush, FaGamepad, FaTshirt, FaMobileAlt, FaMugHot, FaSeedling, FaCouch, FaHome, FaTools } from 'react-icons/fa6';
 
 export default function AnaSayfa() {
   const [lang, setLang] = useState('TR');
