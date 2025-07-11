@@ -26,12 +26,25 @@ export default function AnaSayfa() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
       {/* ÜST ŞERİT */}
-      <header className="bg-green-700 text-white px-6 py-4 flex justify-between items-center shadow">
+      <header className="bg-green-700 text-white px-6 py-4 flex flex-col md:flex-row justify-between items-center shadow gap-3">
+        {/* Logo ve Başlık */}
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="TurkBazaar Logosu" width={40} height={40} />
           <span className="text-xl font-bold">TurkBazaar</span>
         </div>
-        <div className="flex items-center gap-4">
+
+        {/* Kategoriler Butonu */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="bg-white text-green-700 px-3 py-1 rounded font-semibold">Kategoriler:</span>
+          {kategoriler.slice(0, 4).map((kategori, i) => (
+            <span key={i} className="bg-green-800 text-white text-sm px-2 py-1 rounded">
+              {kategori}
+            </span>
+          ))}
+        </div>
+
+        {/* Sağ Taraf: Giriş / Dil / Destek */}
+        <div className="flex items-center gap-3">
           <Link href="/giris-yap" className="hover:underline">Giriş Yap</Link>
           <Link href="/kayit-ol" className="hover:underline">Kayıt Ol</Link>
           <select
@@ -42,6 +55,9 @@ export default function AnaSayfa() {
             <option value="TR">Türkçe</option>
             <option value="EN">English</option>
             <option value="AR">عربي</option>
+            <option value="DE">Deutsch</option>
+            <option value="ZH">中文</option>
+            <option value="KR">한국어</option>
           </select>
           <button className="bg-white text-green-700 px-3 py-1 rounded hover:bg-gray-100">
             Canlı Destek
@@ -70,7 +86,7 @@ export default function AnaSayfa() {
           </button>
         </div>
 
-        {/* KATEGORİLER */}
+        {/* TÜM KATEGORİLER */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6">
           {kategoriler.map((kategori, index) => (
             <div
@@ -87,21 +103,9 @@ export default function AnaSayfa() {
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-4">Öne Çıkan Ürünler</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <UrunKarti
-              baslik="Organik Zeytinyağı"
-              resim="/urun1.jpg"
-              fiyat="150₺"
-            />
-            <UrunKarti
-              baslik="El Dokuması Halı"
-              resim="/urun2.jpg"
-              fiyat="3.200₺"
-            />
-            <UrunKarti
-              baslik="Ahşap Oyuncak Seti"
-              resim="/urun3.jpg"
-              fiyat="450₺"
-            />
+            <UrunKarti baslik="Organik Zeytinyağı" resim="/urun1.jpg" fiyat="150₺" />
+            <UrunKarti baslik="El Dokuması Halı" resim="/urun2.jpg" fiyat="3.200₺" />
+            <UrunKarti baslik="Ahşap Oyuncak Seti" resim="/urun3.jpg" fiyat="450₺" />
           </div>
         </div>
       </main>
