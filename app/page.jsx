@@ -7,18 +7,12 @@ import UrunKarti from '@/components/UrunKarti';
 
 // Tüm ikonları fa6'dan alıyoruz (tek yerden!)
 import {
-  FaBoxOpen,
-  FaTruck,
-  FaLightbulb,
-  FaPaintbrush,
-  FaLeaf,
-  FaCouch,
-  FaUtensils,
-  FaHammer,
-  FaTshirt,
-  FaMobileAlt,
-  FaSeedling
-} from 'react-icons/fa6';
+  FaBoxOpen, FaTruck, FaLightbulb,
+  FaLeaf, FaCouch, FaUtensils,
+  FaHammer, FaTshirt, FaMobileAlt, FaSeedling
+} from 'react-icons/fa';
+
+import { FaPaintbrush } from 'react-icons/fa6';
 
 export default function AnaSayfa() {
   const [lang, setLang] = useState('TR');
