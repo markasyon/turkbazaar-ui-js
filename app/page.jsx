@@ -5,31 +5,22 @@ import Link from 'next/link';
 import { useState } from 'react';
 import UrunKarti from '@/components/UrunKarti';
 
-// Tüm ikonları fa6'dan alıyoruz (tek yerden!)
-import {
-  FaBoxOpen, FaTruck, FaLightbulb,
-  FaLeaf, FaCouch, FaUtensils,
-  FaHammer, FaTshirt, FaMobileAlt, FaSeedling
-} from 'react-icons/fa';
-
-import { FaPaintbrush } from 'react-icons/fa6';
-
 export default function AnaSayfa() {
   const [lang, setLang] = useState('TR');
 
   const kategoriler = [
-    { ad: 'Ambalaj ve Baskı', icon: <FaBoxOpen size={24} /> },
-    { ad: 'Taşımacılık', icon: <FaTruck size={24} /> },
-    { ad: 'Isıklar ve Aydınlatma', icon: <FaLightbulb size={24} /> },
-    { ad: 'Sanat ve El Sanatları', icon: <FaPaintbrush size={24} /> },
-    { ad: 'Oyuncaklar', icon: <FaLeaf size={24} /> },
-    { ad: 'Giyim ve Aksesuar', icon: <FaTshirt size={24} /> },
-    { ad: 'Tüketici Elektroniği', icon: <FaMobileAlt size={24} /> },
-    { ad: 'Günlük Kullanım Ürünleri', icon: <FaUtensils size={24} /> },
-    { ad: 'Gıda ve Tarım', icon: <FaSeedling size={24} /> },
-    { ad: 'Mobilya', icon: <FaCouch size={24} /> },
-    { ad: 'Ev Gereçleri', icon: <FaHammer size={24} /> },
-    { ad: 'Yapı ve İnşaat', icon: <FaTruck size={24} /> },
+    { ad: 'Ambalaj ve Baskı' },
+    { ad: 'Taşımacılık' },
+    { ad: 'Isıklar ve Aydınlatma' },
+    { ad: 'Sanat ve El Sanatları' },
+    { ad: 'Oyuncaklar' },
+    { ad: 'Giyim ve Aksesuar' },
+    { ad: 'Tüketici Elektroniği' },
+    { ad: 'Günlük Kullanım Ürünleri' },
+    { ad: 'Gıda ve Tarım' },
+    { ad: 'Mobilya' },
+    { ad: 'Ev Gereçleri' },
+    { ad: 'Yapı ve İnşaat' },
   ];
 
   return (
@@ -50,8 +41,7 @@ export default function AnaSayfa() {
             <button className="hover:underline">Kategoriler</button>
             <div className="absolute hidden group-hover:block bg-white text-black shadow-md rounded mt-2 p-2 w-48 z-50">
               {kategoriler.map((kat, i) => (
-                <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-2">
-                  {kat.icon}
+                <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm">
                   {kat.ad}
                 </div>
               ))}
@@ -107,10 +97,9 @@ export default function AnaSayfa() {
           {kategoriler.map((kategori, index) => (
             <div
               key={index}
-              className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer flex items-center gap-2"
+              className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer text-center"
             >
-              <div className="text-green-600 text-2xl">{kategori.icon}</div>
-              <p className="font-medium">{kategori.ad}</p>
+              <p className="font-medium text-gray-700">{kategori.ad}</p>
             </div>
           ))}
         </div>
