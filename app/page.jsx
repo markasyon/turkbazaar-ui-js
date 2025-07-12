@@ -5,22 +5,37 @@ import Link from 'next/link';
 import { useState } from 'react';
 import UrunKarti from '@/components/UrunKarti';
 
+import {
+  CubeIcon,
+  TruckIcon,
+  LightBulbIcon,
+  PaintBrushIcon,
+  GiftIcon,
+  UserIcon,
+  DevicePhoneMobileIcon,
+  WrenchIcon,
+  BuildingOffice2Icon,
+  ShoppingBagIcon,
+  HomeModernIcon,
+  Cog6ToothIcon
+} from '@heroicons/react/24/solid';
+
 export default function AnaSayfa() {
   const [lang, setLang] = useState('TR');
 
   const kategoriler = [
-    { ad: 'Ambalaj ve Baskı' },
-    { ad: 'Taşımacılık' },
-    { ad: 'Isıklar ve Aydınlatma' },
-    { ad: 'Sanat ve El Sanatları' },
-    { ad: 'Oyuncaklar' },
-    { ad: 'Giyim ve Aksesuar' },
-    { ad: 'Tüketici Elektroniği' },
-    { ad: 'Günlük Kullanım Ürünleri' },
-    { ad: 'Gıda ve Tarım' },
-    { ad: 'Mobilya' },
-    { ad: 'Ev Gereçleri' },
-    { ad: 'Yapı ve İnşaat' },
+    { ad: 'Ambalaj ve Baskı', icon: <CubeIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Taşımacılık', icon: <TruckIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Isıklar ve Aydınlatma', icon: <LightBulbIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Sanat ve El Sanatları', icon: <PaintBrushIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Oyuncaklar', icon: <GiftIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Giyim ve Aksesuar', icon: <UserIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Tüketici Elektroniği', icon: <DevicePhoneMobileIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Günlük Kullanım Ürünleri', icon: <ShoppingBagIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Gıda ve Tarım', icon: <WrenchIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Mobilya', icon: <HomeModernIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Ev Gereçleri', icon: <Cog6ToothIcon className="w-6 h-6 text-green-600" /> },
+    { ad: 'Yapı ve İnşaat', icon: <BuildingOffice2Icon className="w-6 h-6 text-green-600" /> },
   ];
 
   return (
@@ -39,9 +54,10 @@ export default function AnaSayfa() {
           {/* Kategoriler Açılır Menü */}
           <div className="relative group">
             <button className="hover:underline">Kategoriler</button>
-            <div className="absolute hidden group-hover:block bg-white text-black shadow-md rounded mt-2 p-2 w-48 z-50">
+            <div className="absolute hidden group-hover:block bg-white text-black shadow-md rounded mt-2 p-2 w-52 z-50">
               {kategoriler.map((kat, i) => (
-                <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm">
+                <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-2">
+                  {kat.icon}
                   {kat.ad}
                 </div>
               ))}
@@ -97,8 +113,9 @@ export default function AnaSayfa() {
           {kategoriler.map((kategori, index) => (
             <div
               key={index}
-              className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer text-center"
+              className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer flex items-center gap-2"
             >
+              {kategori.icon}
               <p className="font-medium text-gray-700">{kategori.ad}</p>
             </div>
           ))}
