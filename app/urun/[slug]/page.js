@@ -36,24 +36,30 @@ export default function UrunDetay() {
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{urun.baslik}</h1>
-      <Image
-        src={urun.resim}
-        alt={urun.baslik}
-        width={600}
-        height={400}
-        className="rounded shadow mb-6"
-      />
-      <p className="text-lg text-gray-700 mb-4">{urun.aciklama}</p>
-      <p className="text-xl font-bold text-green-700 mb-6">{urun.fiyat}</p>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-4">{urun.baslik}</h1>
 
-      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded mr-4">
-        Teklif Ver
-      </button>
-      <button className="bg-white border border-green-600 text-green-700 px-6 py-2 rounded hover:bg-gray-100">
-        Müzakere Et
-      </button>
+      <div className="w-full max-w-md mx-auto">
+        <Image
+          src={urun.resim}
+          alt={urun.baslik}
+          width={400}
+          height={300}
+          className="w-full h-auto object-contain rounded shadow mb-6"
+        />
+      </div>
+
+      <p className="text-base sm:text-lg text-gray-700 mb-4">{urun.aciklama}</p>
+      <p className="text-lg sm:text-xl font-bold text-green-700 mb-6">{urun.fiyat}</p>
+
+      <div className="flex flex-col sm:flex-row gap-4">
+        <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
+          Teklif Ver
+        </button>
+        <button className="bg-white border border-green-600 text-green-700 px-6 py-2 rounded hover:bg-gray-100">
+          Müzakere Et
+        </button>
+      </div>
     </div>
   );
 }
