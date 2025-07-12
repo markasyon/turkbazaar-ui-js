@@ -1,35 +1,33 @@
 'use client';
 
-import Image from 'next/image'; import Link from 'next/link'; import { useState } from 'react'; import UrunKarti from '@/components/UrunKarti'; import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintBrush, FaPuzzlePiece, FaTshirt, FaMobileAlt, FaLeaf, FaSeedling, FaCouch, FaUtensils, FaHammer } from 'react-icons/fa';
+import Image from 'next/image'; import Link from 'next/link'; import { useState } from 'react'; import UrunKarti from '@/components/UrunKarti';
+
+import { FaBoxOpen, FaTruck, FaLightbulb, FaPaintbrush, FaLeaf, FaCouch, FaUtensils, FaHammer } from 'react-icons/fa6';
+
+import { FaTshirt, FaMobileAlt, FaSeedling } from 'react-icons/fa';
 
 export default function AnaSayfa() { const [lang, setLang] = useState('TR');
 
-const kategoriler = [ { isim: 'Ambalaj ve Baskı', ikon: <FaBoxOpen size={28} /> }, { isim: 'Taşımacılık', ikon: <FaTruck size={28} /> }, { isim: 'Isıklar ve Aydınlatma', ikon: <FaLightbulb size={28} /> }, { isim: 'Sanat ve El Sanatları', ikon: <FaPaintBrush size={28} /> }, { isim: 'Oyuncaklar', ikon: <FaPuzzlePiece size={28} /> }, { isim: 'Giyim ve Aksesuar', ikon: <FaTshirt size={28} /> }, { isim: 'Tüketici Elektroniği', ikon: <FaMobileAlt size={28} /> }, { isim: 'Günlük Kullanım Ürünleri', ikon: <FaLeaf size={28} /> }, { isim: 'Gıda ve Tarım', ikon: <FaSeedling size={28} /> }, { isim: 'Mobilya', ikon: <FaCouch size={28} /> }, { isim: 'Ev Gereçleri', ikon: <FaUtensils size={28} /> }, { isim: 'Yapı ve İnşaat', ikon: <FaHammer size={28} /> }, ];
+const kategoriler = [ { ad: 'Ambalaj ve Baskı', icon: <FaBoxOpen size={24} /> }, { ad: 'Taşımacılık', icon: <FaTruck size={24} /> }, { ad: 'Isıklar ve Aydınlatma', icon: <FaLightbulb size={24} /> }, { ad: 'Sanat ve El Sanatları', icon: <FaPaintbrush size={24} /> }, { ad: 'Oyuncaklar', icon: <FaLeaf size={24} /> }, { ad: 'Giyim ve Aksesuar', icon: <FaTshirt size={24} /> }, { ad: 'Tüketici Elektroniği', icon: <FaMobileAlt size={24} /> }, { ad: 'Günlük Kullanım Ürünleri', icon: <FaUtensils size={24} /> }, { ad: 'Gıda ve Tarım', icon: <FaSeedling size={24} /> }, { ad: 'Mobilya', icon: <FaCouch size={24} /> }, { ad: 'Ev Gereçleri', icon: <FaHammer size={24} /> }, { ad: 'Yapı ve İnşaat', icon: <FaTruck size={24} /> }, ];
 
-return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between"> {/* ÜST ŞERİT */} <header className="bg-green-700 text-white px-6 py-4 flex justify-between items-center shadow relative"> <div className="flex items-center gap-3"> <Image src="/logo.png" alt="TurkBazaar Logosu" width={40} height={40} /> <span className="text-xl font-bold">TurkBazaar</span> </div>
+return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between"> <header className="bg-green-700 text-white px-6 py-4 flex justify-between items-center shadow relative"> <div className="flex items-center gap-3"> <Image src="/logo.png" alt="TurkBazaar Logosu" width={40} height={40} /> <span className="text-xl font-bold">TurkBazaar</span> </div>
 
 <div className="flex items-center gap-4">
-      <Link href="/giris-yap" className="hover:underline">
-        Giriş Yap
-      </Link>
-      <Link href="/kayit-ol" className="hover:underline">
-        Kayıt Ol
-      </Link>
+      <Link href="/giris-yap" className="hover:underline">Giriş Yap</Link>
+      <Link href="/kayit-ol" className="hover:underline">Kayıt Ol</Link>
 
-      {/* Kategoriler Açılır Menü */}
       <div className="relative group">
         <button className="hover:underline">Kategoriler</button>
         <div className="absolute hidden group-hover:block bg-white text-black shadow-md rounded mt-2 p-2 w-48 z-50">
           {kategoriler.map((kat, i) => (
             <div key={i} className="px-2 py-1 hover:bg-gray-100 cursor-pointer text-sm flex items-center gap-2">
-              <span>{kat.ikon}</span>
-              <span>{kat.isim}</span>
+              {kat.icon}
+              {kat.ad}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Dil Seçimi */}
       <select
         value={lang}
         onChange={(e) => setLang(e.target.value)}
@@ -43,7 +41,6 @@ return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
         <option value="KO">🇰🇷 한국어</option>
       </select>
 
-      {/* Canlı Destek (WhatsApp Bağlantısı) */}
       <a
         href="https://wa.me/905551112233"
         target="_blank"
@@ -55,16 +52,12 @@ return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
     </div>
   </header>
 
-  {/* ANA İÇERİK */}
   <main className="p-8">
     <div className="max-w-6xl mx-auto text-center">
       <h1 className="text-3xl font-bold mb-2">TurkBazaar&apos;a Hoş Geldiniz</h1>
-      <p className="text-gray-600 mb-6">
-        Türkiye&apos;nin yerli satıcılarını dünyayla buluşturan ticaret platformu.
-      </p>
+      <p className="text-gray-600 mb-6">Türkiye&apos;nin yerli satıcılarını dünyayla buluşturan ticaret platformu.</p>
     </div>
 
-    {/* ARAMA */}
     <div className="flex justify-center mb-8">
       <input
         type="text"
@@ -76,20 +69,18 @@ return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
       </button>
     </div>
 
-    {/* KATEGORİLER */}
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6">
       {kategoriler.map((kategori, index) => (
         <div
           key={index}
-          className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center"
+          className="bg-white p-4 rounded shadow hover:shadow-lg transition cursor-pointer flex items-center gap-2"
         >
-          <div className="text-green-600 text-2xl mb-2">{kategori.ikon}</div>
-          <p className="font-medium text-center text-sm">{kategori.isim}</p>
+          <div className="text-green-600 text-2xl">{kategori.icon}</div>
+          <p className="font-medium">{kategori.ad}</p>
         </div>
       ))}
     </div>
 
-    {/* ÖNE ÇIKAN ÜRÜNLER */}
     <div className="mt-12">
       <h2 className="text-2xl font-bold mb-4">Öne Çıkan Ürünler</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -100,7 +91,6 @@ return ( <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
     </div>
   </main>
 
-  {/* FOOTER */}
   <footer className="bg-green-800 text-white py-10">
     <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div>
