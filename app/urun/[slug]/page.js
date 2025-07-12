@@ -2,22 +2,28 @@
 
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
 
 const urunler = [
   {
-    slug: 'urun1',
-    ad: 'Demo Ürün 1',
-    aciklama: 'Bu demo ürün 1\'in açıklamasıdır.',
-    fiyat: '250₺',
+    slug: 'organik-zeytinyagi',
+    baslik: 'Organik Zeytinyağı',
     resim: '/urun1.jpg',
+    fiyat: '150₺',
+    aciklama: 'Doğal sıkım, katkısız ve taze organik zeytinyağı.',
   },
   {
-    slug: 'urun2',
-    ad: 'Demo Ürün 2',
-    aciklama: 'Bu demo ürün 2\'nin açıklamasıdır.',
-    fiyat: '399₺',
+    slug: 'el-dokumasi-hali',
+    baslik: 'El Dokuması Halı',
     resim: '/urun2.jpg',
+    fiyat: '3.200₺',
+    aciklama: 'Tamamen el dokuması, doğal yün ve kök boya kullanılarak üretilmiştir.',
+  },
+  {
+    slug: 'ahsap-oyuncak-seti',
+    baslik: 'Ahşap Oyuncak Seti',
+    resim: '/urun3.jpg',
+    fiyat: '450₺',
+    aciklama: 'Sağlığa uygun boyalarla boyanmış el yapımı ahşap oyuncak seti.',
   }
 ];
 
@@ -26,24 +32,28 @@ export default function UrunDetay() {
   const urun = urunler.find((u) => u.slug === slug);
 
   if (!urun) {
-    return <div className="text-center text-red-600 mt-20">Ürün bulunamadı.</div>;
+    return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="bg-white p-6 rounded shadow-md">
-        <Image
-          src={urun.resim}
-          alt={urun.ad}
-          width={500}
-          height={400}
-          className="rounded mb-4"
-        />
-        <h1 className="text-3xl font-bold mb-2">{urun.ad}</h1>
-        <p className="text-gray-700 mb-4">{urun.aciklama}</p>
-        <p className="text-lg font-semibold mb-4 text-green-600">{urun.fiyat}</p>
-        <Link href="/" className="text-blue-600 hover:underline">← Ana Sayfa</Link>
-      </div>
+    <div className="p-8 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">{urun.baslik}</h1>
+      <Image
+        src={urun.resim}
+        alt={urun.baslik}
+        width={600}
+        height={400}
+        className="rounded shadow mb-6"
+      />
+      <p className="text-lg text-gray-700 mb-4">{urun.aciklama}</p>
+      <p className="text-xl font-bold text-green-700 mb-6">{urun.fiyat}</p>
+
+      <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded mr-4">
+        Teklif Ver
+      </button>
+      <button className="bg-white border border-green-600 text-green-700 px-6 py-2 rounded hover:bg-gray-100">
+        Müzakere Et
+      </button>
     </div>
   );
 }
