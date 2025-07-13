@@ -30,8 +30,13 @@ export default function UrunDetay() {
 
   const [teklifModal, setTeklifModal] = useState(false);
   const [ornekModal, setOrnekModal] = useState(false);
-  const [form, setForm] = useState({ isim: '', adet: '', mesaj: '' });
-  const [ornekForm, setOrnekForm] = useState({ isim: '', adres: '', telefon: '', mesaj: '' });
+
+  const [form, setForm] = useState({
+    isim: '', eposta: '', telefon: '', adet: '', mesaj: ''
+  });
+  const [ornekForm, setOrnekForm] = useState({
+    isim: '', adres: '', telefon: '', mesaj: ''
+  });
 
   if (!urun) return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
 
@@ -39,12 +44,12 @@ export default function UrunDetay() {
   const handleOrnekChange = (e) => setOrnekForm({ ...ornekForm, [e.target.name]: e.target.value });
 
   const handleGonder = () => {
-    alert(`Teklif gönderildi:\nİsim: ${form.isim}\nAdet: ${form.adet}\nMesaj: ${form.mesaj}`);
+    alert(`Teklif gönderildi:\n${JSON.stringify(form, null, 2)}`);
     setTeklifModal(false);
   };
 
   const handleOrnekGonder = () => {
-    alert(`Örnek talebi gönderildi:\nİsim: ${ornekForm.isim}\nAdres: ${ornekForm.adres}\nTelefon: ${ornekForm.telefon}\nMesaj: ${ornekForm.mesaj}`);
+    alert(`Örnek talebi gönderildi:\n${JSON.stringify(ornekForm, null, 2)}`);
     setOrnekModal(false);
   };
 
@@ -60,6 +65,7 @@ export default function UrunDetay() {
         <div>
           <h1 className="text-3xl font-bold mb-2">{urun.baslik}</h1>
 
+          {/* Firma bilgisi */}
           {urun.firma && (
             <div className="flex items-center gap-3 mb-4">
               {urun.firma.logo && (
@@ -71,10 +77,12 @@ export default function UrunDetay() {
 
           <p className="text-gray-700 mb-2">{urun.aciklama}</p>
 
+          {/* Teknik bilgi */}
           <div className="bg-gray-100 text-sm text-gray-800 p-3 rounded mb-4">
             <strong>Teknik Özellikler:</strong> {urun.teknik}
           </div>
 
+          {/* Fiyat tablosu */}
           <table className="w-full text-sm border mb-4">
             <thead>
               <tr className="bg-gray-100">
@@ -119,8 +127,10 @@ export default function UrunDetay() {
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
             <button onClick={() => setTeklifModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">✕</button>
             <h2 className="text-xl font-bold mb-4">Teklif Ver</h2>
-            <input type="text" name="isim" placeholder="Adınız Soyadınız" value={form.isim} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" />
-            <input type="number" name="adet" placeholder="Adet" value={form.adet} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <input type="text" name="isim" placeholder="Adınız Soyadınız" value={form.isim} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
+            <input type="email" name="eposta" placeholder="E-posta" value={form.eposta} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
+            <input type="tel" name="telefon" placeholder="Telefon" value={form.telefon} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
+            <input type="number" name="adet" placeholder="Adet" value={form.adet} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <textarea name="mesaj" placeholder="Ek bilgi / not" value={form.mesaj} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3}></textarea>
             <button onClick={handleGonder} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full">Gönder</button>
           </div>
@@ -133,9 +143,9 @@ export default function UrunDetay() {
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
             <button onClick={() => setOrnekModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">✕</button>
             <h2 className="text-xl font-bold mb-4">Örnek Ürün Talebi</h2>
-            <input type="text" name="isim" placeholder="Adınız Soyadınız" value={ornekForm.isim} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" />
-            <input type="text" name="adres" placeholder="Adresiniz" value={ornekForm.adres} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" />
-            <input type="tel" name="telefon" placeholder="Telefon Numaranız" value={ornekForm.telefon} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <input type="text" name="isim" placeholder="Adınız Soyadınız" value={ornekForm.isim} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-2 rounded" />
+            <input type="text" name="adres" placeholder="Adresiniz" value={ornekForm.adres} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-2 rounded" />
+            <input type="tel" name="telefon" placeholder="Telefon Numaranız" value={ornekForm.telefon} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <textarea name="mesaj" placeholder="Not / Açıklama" value={ornekForm.mesaj} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3}></textarea>
             <button onClick={handleOrnekGonder} className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded w-full">Gönder</button>
           </div>
