@@ -30,6 +30,7 @@ export default function UrunDetay() {
 
   const [teklifModal, setTeklifModal] = useState(false);
   const [ornekModal, setOrnekModal] = useState(false);
+  const [favori, setFavori] = useState(false);
 
   const [form, setForm] = useState({
     isim: '', eposta: '', telefon: '', adet: '', mesaj: ''
@@ -37,6 +38,27 @@ export default function UrunDetay() {
   const [ornekForm, setOrnekForm] = useState({
     isim: '', adres: '', telefon: '', mesaj: ''
   });
+
+  const [yorumlar, setYorumlar] = useState([
+    {
+      isim: 'Ahmet K.',
+      yorum: 'Ürün beklediğimden kaliteli çıktı, kargo da hızlıydı.',
+      puan: 5,
+      tarih: '13 Temmuz 2025'
+    },
+    {
+      isim: 'Elif Y.',
+      yorum: 'Fiyat/performans açısından çok iyi. Tavsiye ederim.',
+      puan: 4,
+      tarih: '10 Temmuz 2025'
+    },
+    {
+      isim: 'Mehmet B.',
+      yorum: 'Ürün güzel ama paketleme geliştirilebilir.',
+      puan: 3,
+      tarih: '5 Temmuz 2025'
+    }
+  ]);
 
   if (!urun) return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
 
@@ -56,9 +78,19 @@ export default function UrunDetay() {
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Ürün görseli */}
-        <div>
+        {/* Ürün görseli ve favori */}
+        <div className="relative">
           <Image src={urun.resim} alt={urun.baslik} width={500} height={350} className="rounded shadow" />
+          <button
+            onClick={() => setFavori(!favori)}
+            className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:scale-105 transition"
+            title="Favorilere Ekle"
+          >
+            {favori ? '❤️' : '🤍'}
+          </button>
+          {favori && (
+            <span className="absolute top-10 right-2 text-green-700 font-semibold">Favorilere eklendi</span>
+          )}
         </div>
 
         {/* Ürün bilgileri */}
@@ -77,7 +109,7 @@ export default function UrunDetay() {
 
           <p className="text-gray-700 mb-2">{urun.aciklama}</p>
 
-          {/* ✅ Teknik bilgi (sorunsuz görünür) */}
+          {/* ✅ Teknik bilgi */}
           {urun.teknik && (
             <div className="text-sm text-gray-800 font-medium mb-3">
               <span className="font-semibold text-gray-600">Teknik Özellikler: </span>{urun.teknik}
@@ -121,6 +153,29 @@ export default function UrunDetay() {
               Örnek İste
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Kullanıcı Yorumları */}
+      <div className="mt-10">
+        <h2 className="text-xl font-semibold mb-4">Kullanıcı Yorumları</h2>
+        <div className="space-y-4">
+          {yorumlar.map((yorum, i) => (
+            <div key={i} className="border p-4 rounded bg-gray-50">
+              <div className="flex justify-between items-center mb-1">
+                <strong className="text-gray-800">{yorum.isim}</strong>
+                <span className="text-sm text-gray-500">{yorum.tarih}</span>
+              </div>
+              <div className="flex items-center mb-1">
+                {Array.from({ length: 5 }).map((_, idx) => (
+                  <span key={idx}>
+                    {idx < yorum.puan ? '⭐' : '☆'}
+                  </span>
+                ))}
+              </div>
+              <p className="text-gray-700 text-sm">{yorum.yorum}</p>
+            </div>
+          ))}
         </div>
       </div>
 
