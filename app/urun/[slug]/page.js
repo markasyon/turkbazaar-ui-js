@@ -24,7 +24,7 @@ const urunler = [
   },
 ];
 
-const initialYorumlar = [
+const yorumlar = [
   { isim: 'Ahmet K.', yorum: 'Ürün beklediğimden kaliteli çıktı, kargo da hızlıydı.', puan: 5, tarih: '13 Temmuz 2025' },
   { isim: 'Elif Y.', yorum: 'Fiyat/performans açısından çok iyi. Tavsiye ederim.', puan: 4, tarih: '10 Temmuz 2025' },
   { isim: 'Mehmet B.', yorum: 'Ürün güzel ama paketleme geliştirilebilir.', puan: 3, tarih: '5 Temmuz 2025' }
@@ -42,7 +42,7 @@ const ssSorular = [
 
 export default function UrunDetay() {
   const { slug } = useParams();
-  const urun = urunler.find(u => u.slug === slug);
+  const urun = urunler.find((u) => u.slug === slug);
 
   const [teklifModal, setTeklifModal] = useState(false);
   const [ornekModal, setOrnekModal] = useState(false);
@@ -51,14 +51,14 @@ export default function UrunDetay() {
   const [form, setForm] = useState({ isim: '', eposta: '', telefon: '', adet: '', mesaj: '' });
   const [ornekForm, setOrnekForm] = useState({ isim: '', adres: '', telefon: '', mesaj: '' });
 
-  // yorumlar için state
-  const [yorumList, setYorumList] = useState(initialYorumlar);
+  // yorumlar için dinamik state
+  const [yorumList, setYorumList] = useState(yorumlar);
   const [yorumForm, setYorumForm] = useState({ isim: '', yorum: '', puan: 0 });
 
   if (!urun) return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleOrnekChange = e => setOrnekForm({ ...ornekForm, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleOrnekChange = (e) => setOrnekForm({ ...ornekForm, [e.target.name]: e.target.value });
 
   const handleGonder = () => {
     alert(`Teklif gönderildi:\n${JSON.stringify(form, null, 2)}`);
@@ -70,21 +70,20 @@ export default function UrunDetay() {
     setOrnekModal(false);
   };
 
-  // yorum form handlers
-  const handleYorumChange = e => setYorumForm({ ...yorumForm, [e.target.name]: e.target.value });
-  const handlePuanSelect = n => setYorumForm({ ...yorumForm, puan: n });
+  // yorum formu handlerları
+  const handleYorumChange = (e) => setYorumForm({ ...yorumForm, [e.target.name]: e.target.value });
+  const handlePuanSelect = (n) => setYorumForm({ ...yorumForm, puan: n });
   const handleYorumSubmit = () => {
-    const yeni = {
+    const yeniYorum = {
       ...yorumForm,
-      tarih: new Date().toLocaleDateString('tr-TR'),
+      tarih: new Date().toLocaleDateString('tr-TR')
     };
-    setYorumList([yeni, ...yorumList]);
+    setYorumList([yeniYorum, ...yorumList]);
     setYorumForm({ isim: '', yorum: '', puan: 0 });
   };
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-
       {/* Ürün görseli ve favori */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="relative">
@@ -174,8 +173,6 @@ export default function UrunDetay() {
       {/* Kullanıcı Yorumları */}
       <div className="mt-10">
         <h2 className="text-xl font-bold mb-4">Kullanıcı Yorumları</h2>
-
-        {/* Yorum listesi */}
         {yorumList.map((y, i) => (
           <div key={i} className="border rounded p-4 mb-3 bg-gray-50">
             <div className="flex items-center justify-between mb-1">
@@ -189,7 +186,7 @@ export default function UrunDetay() {
           </div>
         ))}
 
-        {/* Yorum formu */}
+        {/* Yorum Yazma Formu */}
         <div className="mt-6 p-4 border rounded bg-white">
           <h3 className="font-semibold mb-2">Yorum Yazın</h3>
           <input
@@ -209,7 +206,7 @@ export default function UrunDetay() {
             rows={3}
           />
           <div className="flex items-center mb-2">
-            {Array.from({ length: 5 }, (_, idx) => idx + 1).map(n => (
+            {Array.from({ length: 5 }, (_, idx) => idx + 1).map((n) => (
               <span
                 key={n}
                 onClick={() => handlePuanSelect(n)}
@@ -245,10 +242,24 @@ export default function UrunDetay() {
       <div className="mt-8">
         <h2 className="text-sm font-semibold mb-2">Bu ürünü paylaş:</h2>
         <div className="flex gap-3 flex-wrap">
-          <a href={`https://wa.me/?text=https://site.com/urun/${urun.slug}`} target="_blank" className="text-green-600 hover:underline">WhatsApp</a>
-          <a href={`https://t.me/share/url?url=https://site.com/urun/${urun.slug}`} target="_blank" className="text-blue-500 hover:underline">Telegram</a>
-          <a href={`mailto:?subject=Ürün Tavsiyesi&body=https://site.com/urun/${urun.slug}`} className="text-red-500 hover:underline">E-posta</a>
-          <button onClick={() => { navigator.clipboard.writeText(`https://site.com/urun/${urun.slug}`); alert('Bağlantı kopyalandı!'); }} className="text-gray-600 hover:underline">Bağlantıyı Kopyala</button>
+          <a href={`https://wa.me/?text=https://site.com/urun/${urun.slug}`} target="_blank" className="text-green-600 hover:underline">
+            WhatsApp
+          </a>
+          <a href={`https://t.me/share/url?url=https://site.com/urun/${urun.slug}`} target="_blank" className="text-blue-500 hover:underline">
+            Telegram
+          </a>
+          <a href={`mailto:?subject=Ürün Tavsiyesi&body=https://site.com/urun/${urun.slug}`} className="text-red-500 hover:underline">
+            E-posta
+          </a>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(`https://site.com/urun/${urun.slug}`);
+              alert('Bağlantı kopyalandı!');
+            }}
+            className="text-gray-600 hover:underline"
+          >
+            Bağlantıyı Kopyala
+          </button>
         </div>
       </div>
 
@@ -256,14 +267,18 @@ export default function UrunDetay() {
       {teklifModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
-            <button onClick={() => setTeklifModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">✕</button>
+            <button onClick={() => setTeklifModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">
+              ✕
+            </button>
             <h2 className="text-xl font-bold mb-4">Teklif Ver</h2>
             <input type="text" name="isim" placeholder="Adınız Soyadınız" value={form.isim} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <input type="email" name="eposta" placeholder="E-posta" value={form.eposta} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <input type="tel" name="telefon" placeholder="Telefon" value={form.telefon} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <input type="number" name="adet" placeholder="Adet" value={form.adet} onChange={handleChange} className="w-full border px-3 py-2 mb-2 rounded" />
-            <textarea name="mesaj" placeholder="Ek bilgi / not" value={form.mesaj} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3}></textarea>
-            <button onClick={handleGonder} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full">Gönder</button>
+            <textarea name="mesaj" placeholder="Ek bilgi / not" value={form.mesaj} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3} />
+            <button onClick={handleGonder} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full">
+              Gönder
+            </button>
           </div>
         </div>
       )}
@@ -272,18 +287,20 @@ export default function UrunDetay() {
       {ornekModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
-            <button onClick={() => setOrnekModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">✕</button>
+            <button onClick={() => setOrnekModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">
+              ✕
+            </button>
             <h2 className="text-xl font-bold mb-4">Örnek Ürün Talebi</h2>
             <input type="text" name="isim" placeholder="Adınız Soyadınız" value={ornekForm.isim} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <input type="text" name="adres" placeholder="Adresiniz" value={ornekForm.adres} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-2 rounded" />
             <input type="tel" name="telefon" placeholder="Telefon Numaranız" value={ornekForm.telefon} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-2 rounded" />
-            <textarea name="mesaj" placeholder="Not / Açıklama" value={ornekForm.mesaj} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3}></textarea>
-            <button onClick={handleOrnekGonder} className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded w-full">Gönder</button>
+            <textarea name="mesaj" placeholder="Not / Açıklama" value={ornekForm.mesaj} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3} />
+            <button onClick={handleOrnekGonder} className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded w-full">
+              Gönder
+            </button>
           </div>
         </div>
       )}
-
     </div>
   );
 }
-```0
