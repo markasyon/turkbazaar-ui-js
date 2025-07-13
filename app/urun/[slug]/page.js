@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
-// Ürün listesi örneği
 const urunler = [
   {
     slug: 'organik-zeytinyagi',
@@ -16,7 +15,7 @@ const urunler = [
       { adet: '51+', fiyat: '125₺' }
     ],
     aciklama: 'Doğal sıkım, katkısız ve taze organik zeytinyağı.',
-    teknik: 'Soğuk sıkım, 1. kalite, cam şişe 1L',
+    teknik: 'Soğuk sıkım, 1. kalite, cam şişe 1L.',
     whatsapp: '905551112233',
     firma: {
       ad: 'Lider Süt ve Süt Ürünleri',
@@ -29,20 +28,24 @@ export default function UrunDetay() {
   const { slug } = useParams();
   const urun = urunler.find((u) => u.slug === slug);
 
-  const [modalAcik, setModalAcik] = useState(false);
+  const [teklifModal, setTeklifModal] = useState(false);
+  const [ornekModal, setOrnekModal] = useState(false);
   const [form, setForm] = useState({ isim: '', adet: '', mesaj: '' });
+  const [ornekForm, setOrnekForm] = useState({ isim: '', adres: '', telefon: '', mesaj: '' });
 
-  if (!urun) {
-    return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
-  }
+  if (!urun) return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleOrnekChange = (e) => setOrnekForm({ ...ornekForm, [e.target.name]: e.target.value });
 
   const handleGonder = () => {
     alert(`Teklif gönderildi:\nİsim: ${form.isim}\nAdet: ${form.adet}\nMesaj: ${form.mesaj}`);
-    setModalAcik(false);
+    setTeklifModal(false);
+  };
+
+  const handleOrnekGonder = () => {
+    alert(`Örnek talebi gönderildi:\nİsim: ${ornekForm.isim}\nAdres: ${ornekForm.adres}\nTelefon: ${ornekForm.telefon}\nMesaj: ${ornekForm.mesaj}`);
+    setOrnekModal(false);
   };
 
   return (
@@ -50,20 +53,13 @@ export default function UrunDetay() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Ürün görseli */}
         <div>
-          <Image
-            src={urun.resim}
-            alt={urun.baslik}
-            width={500}
-            height={350}
-            className="rounded shadow"
-          />
+          <Image src={urun.resim} alt={urun.baslik} width={500} height={350} className="rounded shadow" />
         </div>
 
         {/* Ürün bilgileri */}
         <div>
           <h1 className="text-3xl font-bold mb-2">{urun.baslik}</h1>
 
-          {/* Firma bilgisi */}
           {urun.firma && (
             <div className="flex items-center gap-3 mb-4">
               {urun.firma.logo && (
@@ -73,7 +69,12 @@ export default function UrunDetay() {
             </div>
           )}
 
-          {/* Fiyat tablosu */}
+          <p className="text-gray-700 mb-2">{urun.aciklama}</p>
+
+          <div className="bg-gray-100 text-sm text-gray-800 p-3 rounded mb-4">
+            <strong>Teknik Özellikler:</strong> {urun.teknik}
+          </div>
+
           <table className="w-full text-sm border mb-4">
             <thead>
               <tr className="bg-gray-100">
@@ -91,16 +92,8 @@ export default function UrunDetay() {
             </tbody>
           </table>
 
-          {/* Açıklama ve teknik detay */}
-          <p className="text-gray-700 mb-2">{urun.aciklama}</p>
-          <p className="text-gray-500 italic text-sm mb-4">{urun.teknik}</p>
-
-          {/* Butonlar */}
           <div className="flex gap-3 flex-wrap">
-            <button
-              onClick={() => setModalAcik(true)}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
-            >
+            <button onClick={() => setTeklifModal(true)} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
               Teklif Ver
             </button>
 
@@ -113,55 +106,38 @@ export default function UrunDetay() {
               Müzakere Et
             </a>
 
-            <button className="bg-gray-100 text-gray-700 border px-4 py-2 rounded hover:bg-gray-200">
+            <button onClick={() => setOrnekModal(true)} className="bg-gray-100 text-gray-700 border px-4 py-2 rounded hover:bg-gray-200">
               Örnek İste
             </button>
           </div>
         </div>
       </div>
 
-      {/* TEKLİF MODALI */}
-      {modalAcik && (
+      {/* Teklif Ver Modal */}
+      {teklifModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
-            <button onClick={() => setModalAcik(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">
-              ✕
-            </button>
+            <button onClick={() => setTeklifModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">✕</button>
             <h2 className="text-xl font-bold mb-4">Teklif Ver</h2>
+            <input type="text" name="isim" placeholder="Adınız Soyadınız" value={form.isim} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <input type="number" name="adet" placeholder="Adet" value={form.adet} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <textarea name="mesaj" placeholder="Ek bilgi / not" value={form.mesaj} onChange={handleChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3}></textarea>
+            <button onClick={handleGonder} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full">Gönder</button>
+          </div>
+        </div>
+      )}
 
-            <input
-              type="text"
-              name="isim"
-              value={form.isim}
-              onChange={handleChange}
-              placeholder="Adınız Soyadınız"
-              className="w-full border px-3 py-2 mb-3 rounded"
-            />
-
-            <input
-              type="number"
-              name="adet"
-              value={form.adet}
-              onChange={handleChange}
-              placeholder="İstenilen Adet"
-              className="w-full border px-3 py-2 mb-3 rounded"
-            />
-
-            <textarea
-              name="mesaj"
-              value={form.mesaj}
-              onChange={handleChange}
-              placeholder="Ek bilgi / talepler"
-              className="w-full border px-3 py-2 mb-3 rounded"
-              rows={3}
-            ></textarea>
-
-            <button
-              onClick={handleGonder}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full"
-            >
-              Gönder
-            </button>
+      {/* Örnek İste Modal */}
+      {ornekModal && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
+          <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
+            <button onClick={() => setOrnekModal(false)} className="absolute top-2 right-3 text-gray-500 hover:text-black">✕</button>
+            <h2 className="text-xl font-bold mb-4">Örnek Ürün Talebi</h2>
+            <input type="text" name="isim" placeholder="Adınız Soyadınız" value={ornekForm.isim} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <input type="text" name="adres" placeholder="Adresiniz" value={ornekForm.adres} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <input type="tel" name="telefon" placeholder="Telefon Numaranız" value={ornekForm.telefon} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" />
+            <textarea name="mesaj" placeholder="Not / Açıklama" value={ornekForm.mesaj} onChange={handleOrnekChange} className="w-full border px-3 py-2 mb-3 rounded" rows={3}></textarea>
+            <button onClick={handleOrnekGonder} className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded w-full">Gönder</button>
           </div>
         </div>
       )}
