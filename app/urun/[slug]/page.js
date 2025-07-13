@@ -24,6 +24,27 @@ const urunler = [
   },
 ];
 
+const yorumlar = [
+  {
+    isim: 'Ahmet K.',
+    yorum: 'Ürün beklediğimden kaliteli çıktı, kargo da hızlıydı.',
+    puan: 5,
+    tarih: '13 Temmuz 2025'
+  },
+  {
+    isim: 'Elif Y.',
+    yorum: 'Fiyat/performans açısından çok iyi. Tavsiye ederim.',
+    puan: 4,
+    tarih: '10 Temmuz 2025'
+  },
+  {
+    isim: 'Mehmet B.',
+    yorum: 'Ürün güzel ama paketleme geliştirilebilir.',
+    puan: 3,
+    tarih: '5 Temmuz 2025'
+  }
+];
+
 export default function UrunDetay() {
   const { slug } = useParams();
   const urun = urunler.find((u) => u.slug === slug);
@@ -32,33 +53,8 @@ export default function UrunDetay() {
   const [ornekModal, setOrnekModal] = useState(false);
   const [favori, setFavori] = useState(false);
 
-  const [form, setForm] = useState({
-    isim: '', eposta: '', telefon: '', adet: '', mesaj: ''
-  });
-  const [ornekForm, setOrnekForm] = useState({
-    isim: '', adres: '', telefon: '', mesaj: ''
-  });
-
-  const [yorumlar, setYorumlar] = useState([
-    {
-      isim: 'Ahmet K.',
-      yorum: 'Ürün beklediğimden kaliteli çıktı, kargo da hızlıydı.',
-      puan: 5,
-      tarih: '13 Temmuz 2025'
-    },
-    {
-      isim: 'Elif Y.',
-      yorum: 'Fiyat/performans açısından çok iyi. Tavsiye ederim.',
-      puan: 4,
-      tarih: '10 Temmuz 2025'
-    },
-    {
-      isim: 'Mehmet B.',
-      yorum: 'Ürün güzel ama paketleme geliştirilebilir.',
-      puan: 3,
-      tarih: '5 Temmuz 2025'
-    }
-  ]);
+  const [form, setForm] = useState({ isim: '', eposta: '', telefon: '', adet: '', mesaj: '' });
+  const [ornekForm, setOrnekForm] = useState({ isim: '', adres: '', telefon: '', mesaj: '' });
 
   if (!urun) return <div className="p-6 text-red-600">Ürün bulunamadı.</div>;
 
@@ -83,21 +79,17 @@ export default function UrunDetay() {
           <Image src={urun.resim} alt={urun.baslik} width={500} height={350} className="rounded shadow" />
           <button
             onClick={() => setFavori(!favori)}
-            className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:scale-105 transition"
+            className="absolute top-2 right-2 bg-white p-2 rounded-full shadow hover:scale-105 transition"
             title="Favorilere Ekle"
           >
             {favori ? '❤️' : '🤍'}
           </button>
-          {favori && (
-            <span className="absolute top-10 right-2 text-green-700 font-semibold">Favorilere eklendi</span>
-          )}
         </div>
 
         {/* Ürün bilgileri */}
         <div>
           <h1 className="text-3xl font-bold mb-2">{urun.baslik}</h1>
 
-          {/* Firma bilgisi */}
           {urun.firma && (
             <div className="flex items-center gap-3 mb-2">
               {urun.firma.logo && (
@@ -109,14 +101,12 @@ export default function UrunDetay() {
 
           <p className="text-gray-700 mb-2">{urun.aciklama}</p>
 
-          {/* ✅ Teknik bilgi */}
           {urun.teknik && (
             <div className="text-sm text-gray-800 font-medium mb-3">
               <span className="font-semibold text-gray-600">Teknik Özellikler: </span>{urun.teknik}
             </div>
           )}
 
-          {/* Fiyat tablosu */}
           <table className="w-full text-sm border mb-4">
             <thead>
               <tr className="bg-gray-100">
@@ -134,7 +124,6 @@ export default function UrunDetay() {
             </tbody>
           </table>
 
-          {/* Butonlar */}
           <div className="flex gap-3 flex-wrap mb-4">
             <button onClick={() => setTeklifModal(true)} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
               Teklif Ver
@@ -156,30 +145,24 @@ export default function UrunDetay() {
         </div>
       </div>
 
-      {/* Kullanıcı Yorumları */}
+      {/* Yorumlar */}
       <div className="mt-10">
-        <h2 className="text-xl font-semibold mb-4">Kullanıcı Yorumları</h2>
-        <div className="space-y-4">
-          {yorumlar.map((yorum, i) => (
-            <div key={i} className="border p-4 rounded bg-gray-50">
-              <div className="flex justify-between items-center mb-1">
-                <strong className="text-gray-800">{yorum.isim}</strong>
-                <span className="text-sm text-gray-500">{yorum.tarih}</span>
-              </div>
-              <div className="flex items-center mb-1">
-                {Array.from({ length: 5 }).map((_, idx) => (
-                  <span key={idx}>
-                    {idx < yorum.puan ? '⭐' : '☆'}
-                  </span>
-                ))}
-              </div>
-              <p className="text-gray-700 text-sm">{yorum.yorum}</p>
+        <h2 className="text-xl font-bold mb-4">Kullanıcı Yorumları</h2>
+        {yorumlar.map((yorum, i) => (
+          <div key={i} className="border rounded p-4 mb-3 bg-gray-50">
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-semibold">{yorum.isim}</span>
+              <span className="text-xs text-gray-500">{yorum.tarih}</span>
             </div>
-          ))}
-        </div>
+            <div className="text-yellow-500 mb-1">
+              {'★'.repeat(yorum.puan)}{'☆'.repeat(5 - yorum.puan)}
+            </div>
+            <p className="text-gray-700">{yorum.yorum}</p>
+          </div>
+        ))}
       </div>
 
-      {/* Teklif Ver Modal */}
+      {/* Modallar */}
       {teklifModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
@@ -195,7 +178,6 @@ export default function UrunDetay() {
         </div>
       )}
 
-      {/* Örnek İste Modal */}
       {ornekModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="bg-white rounded p-6 w-full max-w-md shadow-lg relative">
