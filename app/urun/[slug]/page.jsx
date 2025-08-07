@@ -31,20 +31,19 @@ export default function UrunDetay() {
   const [yorumForm, setYorumForm] = useState({ isim: '', text: '', rating: 0 });
 
   // ➎ Sayfa açılır açılmaz verileri çek
-  useEffect(() => {
-    async function load() {
-      // ürün + benzer
-      const res = await fetch(`/api/urun/${slug}`);
-      const data = await res.json();
-      setUrun(data.urun);
-      setBenzerUrunler(data.similar);
+ useEffect(() => {
+  if (!slug) return; // 🔧 slug gelmeden fetch yapma
+  async function load() {
+    const res = await fetch(`/api/urun/${slug}`);
+    const data = await res.json();
+    setUrun(data.urun);
+    setBenzerUrunler(data.similar);
 
-      // yorumlar
-      const cres = await fetch(`/api/urun/${slug}/comments`);
-      setYorumList(await cres.json());
-    }
-    load();
-  }, [slug]);
+    const cres = await fetch(`/api/urun/${slug}/comments`);
+    setYorumList(await cres.json());
+  }
+  load();
+}, [slug]);
 
   if (!urun) return <div className="p-6 text-gray-500">Yükleniyor...</div>;
 
