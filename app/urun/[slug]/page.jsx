@@ -1,89 +1,83 @@
 'use client';
 
- import Image from 'next/image';
- import { useParams } from 'next/navigation';
- import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
- // SSS hâlâ statik olarak burada tanımlı
- const ssSorular = [
-   { soru: 'Kargo süresi ne kadar?', cevap: 'Siparişiniz 2 iş günü içinde kargoya verilir.' },
-   { soru: 'İade koşulları nelerdir?', cevap: 'Ürün tesliminden sonra 14 gün içinde iade edebilirsiniz.' }
- ];
+// SSS hâlâ statik olarak burada tanımlı
+const ssSorular = [
+  { soru: 'Kargo süresi ne kadar?', cevap: 'Siparişiniz 2 iş günü içinde kargoya verilir.' },
+  { soru: 'İade koşulları nelerdir?', cevap: 'Ürün tesliminden sonra 14 gün içinde iade edebilirsiniz.' }
+];
 
- export default function UrunDetay() {
-   const { slug } = useParams();
+export default function UrunDetay() {
+  const { slug } = useParams();
 
-   // ➊ Dinamik veriler
-   const [urun, setUrun] = useState(null);
-   const [yorumList, setYorumList] = useState([]);
-   const [benzerUrunler, setBenzerUrunler] = useState([]);
-+  // ⚠️ Hata mesajını da tut
-+  const [error, setError] = useState(null);
+  // ➊ Dinamik veriler
+  const [urun, setUrun] = useState(null);
+  const [yorumList, setYorumList] = useState([]);
+  const [benzerUrunler, setBenzerUrunler] = useState([]);
+  // ⚠️ Hata mesajını da tut
+  const [error, setError] = useState(null);
 
-   // ➋ Mevcut statik state’ler
-   const [teklifModal, setTeklifModal] = useState(false);
-   const [ornekModal, setOrnekModal] = useState(false);
-   const [favori, setFavori] = useState(false);
+  // ➋ Mevcut statik state’ler
+  const [teklifModal, setTeklifModal] = useState(false);
+  const [ornekModal, setOrnekModal] = useState(false);
+  const [favori, setFavori] = useState(false);
 
-   // ➌ Teklif / örnek formları
-   const [form, setForm] = useState({ isim: '', eposta: '', telefon: '', adet: '', mesaj: '' });
-   const [ornekForm, setOrnekForm] = useState({ isim: '', adres: '', telefon: '', mesaj: '' });
+  // ➌ Teklif / örnek formları
+  const [form, setForm] = useState({ isim: '', eposta: '', telefon: '', adet: '', mesaj: '' });
+  const [ornekForm, setOrnekForm] = useState({ isim: '', adres: '', telefon: '', mesaj: '' });
 
-   // ➍ Yorum formu state’i
-   const [yorumForm, setYorumForm] = useState({ isim: '', text: '', rating: 0 });
+  // ➍ Yorum formu state’i
+  const [yorumForm, setYorumForm] = useState({ isim: '', text: '', rating: 0 });
 
-   // ➎ Sayfa açılır açılmaz verileri çek
-- useEffect(() => {
--  if (!slug) return; // 🔧 slug gelmeden fetch yapma
--  async function load() {
--    const res = await fetch(`/api/urun/${slug}`);
--    const data = await res.json();
--    setUrun(data.urun);
--    setBenzerUrunler(data.similar);
--
--    const cres = await fetch(`/api/urun/${slug}/comments`);
--    setYorumList(await cres.json());
--  }
--  load();
--}, [slug]);
-+ useEffect(() => {
-+   if (!slug) return;              // 🔧 slug gelmeden fetch yapma
-+   setError(null);                 // önceki hatayı temizle
-+
-+   async function load() {
-+     try {
-+       // 1️⃣ ürün verisi
-+       const res = await fetch(`/api/urun/${slug}`);
-+       if (!res.ok) throw new Error('Ürün bulunamadı');
-+       const data = await res.json();
-+       setUrun(data.urun);          // veya setUrun(data) eğer API direkt ürün dönüyorsa
-+
-+       // 2️⃣ benzer ürünler
-+       if (data.similar) {
-+         setBenzerUrunler(data.similar);
-+       } else {
-+         const simRes = await fetch(`/api/urun/${slug}/similar`);
-+         if (simRes.ok) setBenzerUrunler(await simRes.json());
-+       }
-+
-+       // 3️⃣ yorumlar
-+       const cres = await fetch(`/api/urun/${slug}/comments`);
-+       if (cres.ok) setYorumList(await cres.json());
-+     } catch (err) {
-+       console.error(err);
-+       setError(err.message);
-+     }
-+   }
-+
-+   load();
-+ }, [slug]);
+  // ➎ Sayfa açılır açılmaz verileri çek
+  useEffect(() => {
+    if (!slug) return;               // slug gelmeden fetch yapma
+    setError(null);                  // önceki hatayı temizle
 
--  if (!urun) return <div className="p-6 text-gray-500">Yükleniyor...</div>;
-+  // 🔄 hata varsa göster
-+  if (error) return <div className="p-6 text-red-600">Hata: {error}</div>;
-+
-+  // ⏳ yükleniyorsa
-+  if (!urun) return <div className="p-6 text-gray-500">Yükleniyor...</div>;
+    async function load() {
+      try {
+        // 1️⃣ Ürün detayı
+        const resProd = await fetch(`/api/urun/${slug}`);
+        if (!resProd.ok) throw new Error('Ürün bulunamadı');
+        const dataProd = await resProd.json();
+        setUrun(dataProd.urun);      // veya setUrun(dataProd) eğer API direkt ürün dönüyorsa
+
+        // 2️⃣ Benzer ürünler
+        if (dataProd.similar) {
+          setBenzerUrunler(dataProd.similar);
+        } else {
+          const resSim = await fetch(`/api/urun/${slug}/similar`);
+          if (resSim.ok) {
+            const dataSim = await resSim.json();
+            setBenzerUrunler(dataSim);
+          }
+        }
+
+        // 3️⃣ Yorumlar
+        const resCom = await fetch(`/api/urun/${slug}/comments`);
+        if (resCom.ok) {
+          const dataCom = await resCom.json();
+          setYorumList(dataCom);
+        }
+      } catch (err) {
+        console.error(err);
+        setError(err.message);
+      }
+    }
+
+    load();
+  }, [slug]);
+
+  // 🔄 Hata varsa göster
+  if (error) {
+    return <div className="p-6 text-red-600">Hata: {error}</div>;
+  }
+
+  // ⏳ yükleniyorsa
+  if (!urun) return <div className="p-6 text-gray-500">Yükleniyor...</div>;
 
   // statik helper’lar
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
